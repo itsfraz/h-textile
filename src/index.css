@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme {
+  --color-blue-950: #071a30;
+  --color-blue-900: #0a2540;
+  --color-blue-800: #10365c;
+  --color-blue-700: #184b7a;
+  --color-blue-600: #1e5f9a;
+  --color-blue-100: #dbeafe;
+  --color-blue-50: #eff6ff;
+  
+  --color-green-800: #1a5632;
+  --color-green-700: #2f6946;
+  --color-green-600: #3a8256;
+  --color-green-500: #469c67;
+  --color-green-400: #5cba7d;
+  --color-green-300: #86d89e;
+  --color-green-100: #dcfce7;
+  --color-green-50: #f0fdf4;
+
+  --color-bg-light: #f8f9fa;
+  --color-bg-subtle: #f0f2f5;
+
+  --color-amber-500: #f59e0b;
+  --color-amber-400: #fbbf24;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    @apply bg-bg-light text-slate-800 antialiased overflow-x-hidden;
+  }
+  /* Better focus styles for accessibility */
+  :focus-visible {
+    outline: 2px solid var(--color-green-600);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+::selection {
+  background-color: var(--color-green-600);
+  color: white;
+}
+
+/* Smooth scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-light);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-blue-800);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-blue-700);
+}
+
+/* Image loading skeleton animation */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.img-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
