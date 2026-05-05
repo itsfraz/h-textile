@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, ArrowUpRight } from 'lucide-react';
 import LogoImg from '../assets/logo.png';
+import BackToTop from './BackToTop';
 
 // Custom SVG social icons (lucide-react v1.x removed brand icons)
 const FacebookIcon = ({ size = 16 }) => (
@@ -52,8 +53,8 @@ const Footer = () => {
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-green-500 rounded-full blur-[200px] opacity-5"></div>
       <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-blue-500 rounded-full blur-[150px] opacity-5"></div>
 
-      {/* Top accent bar */}
-      <div className="h-1 bg-linear-to-r from-green-600 via-green-500 to-green-400"></div>
+      {/* Animated top accent bar */}
+      <div className="h-1 animated-gradient-bar"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
@@ -187,6 +188,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
+      <BackToTop />
     </footer>
   );
 };

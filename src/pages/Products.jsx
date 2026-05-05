@@ -1,45 +1,10 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Eye } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import IndustrialFabricImg from '../assets/Industrial Fabric.png';
+import { getAllProducts } from '../data/products';
+import ImageCarousel from '../components/ImageCarousel';
 
-const categories = [
-  {
-    title: 'Industrial Fabrics',
-    image: IndustrialFabricImg,
-    alt: 'Rolls of woven industrial fabric stacked in a textile warehouse',
-    description: 'Our industrial fabrics offer rugged performance, high tensile strength, and excellent resilience. Suitable for manufacturing bags, covers, and structural reinforcements that require tough, heavy-duty characteristics.',
-    specs: ['High tensile strength', 'UV resistant', 'Custom widths available'],
-  },
-  {
-    title: 'Tarpaulin & Tents',
-    image: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=800&q=80',
-    alt: 'Heavy-duty waterproof tarpaulin tents set up for outdoor industrial use',
-    description: 'We supply high-grade tarpaulins and tents designed to secure goods and provide shelter. Fully waterproof, UV-stabilized, and tailored to endure extreme weather conditions for long-lasting protection.',
-    specs: ['100% waterproof', 'UV stabilized', 'Extreme weather rated'],
-  },
-  {
-    title: 'Cotton & Synthetic Filters',
-    image: 'https://images.unsplash.com/photo-1586495985-929b1528096c?auto=format&fit=crop&w=800&q=80',
-    alt: 'Close-up of finely woven cotton and synthetic filter cloth material',
-    description: 'Our precision-woven cotton and synthetic filter cloths serve diverse filtration processes across chemical, pharmaceutical, and food processing plants, ensuring maximal purity, retention, and optimal flow rates.',
-    specs: ['Pharmaceutical grade', 'High flow rate', 'Chemical resistant'],
-  },
-  {
-    title: 'Belting Cloth',
-    image: 'https://images.unsplash.com/photo-1565791380713-1756b9a05343?auto=format&fit=crop&w=800&q=80',
-    alt: 'Industrial belting cloth material on a conveyor manufacturing line',
-    description: 'Engineered for conveyor belting systems, our belting cloth resists tearing and fraying under continuous stress, offering reliable performance for conveying systems operating in harsh industrial environments.',
-    specs: ['Anti-tear construction', 'Continuous stress rated', 'Custom lengths'],
-  },
-  {
-    title: 'Grey & Chemical Canvas',
-    image: 'https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=800&q=80',
-    alt: 'Grey canvas fabric material used in chemical-resistant industrial applications',
-    description: 'Specialized chemical canvas tailored to withstand corrosive substances. Ideal for safety curtains, heavy aprons, and covers in chemical plants where ordinary textiles cannot survive.',
-    specs: ['Corrosion resistant', 'Chemical proof', 'Safety certified'],
-  }
-];
+const categories = getAllProducts();
 
 const Products = () => {
   return (
@@ -89,25 +54,21 @@ const Products = () => {
           <div className="space-y-16 lg:space-y-28">
             {categories.map((category, index) => (
               <motion.div 
-                key={index}
+                key={category.id}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                 className={`flex flex-col ${index % 2 !== 0 ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-8 lg:gap-16 items-center`}
               >
-                {/* Image */}
-                <div className="w-full lg:w-1/2 relative group">
+                {/* Image Carousel */}
+                <div className="w-full lg:w-1/2 relative">
                   <div className={`absolute -inset-3 bg-gradient-to-br ${index % 2 === 0 ? 'from-blue-900 to-blue-800' : 'from-green-700 to-green-600'} rounded-3xl transform ${index % 2 === 0 ? 'rotate-1' : '-rotate-1'} opacity-80`}></div>
-                  <div className="relative rounded-2xl overflow-hidden shadow-2xl h-[280px] sm:h-[350px] lg:h-[420px] bg-slate-100">
-                    <img 
-                      src={category.image} 
-                      alt={category.alt}
-                      loading="lazy"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  <div className="relative z-10">
+                    <ImageCarousel
+                      images={category.images || [{ src: category.image, alt: category.alt }]}
+                      autoplaySpeed={6000}
                     />
-                    {/* Overlay gradient on hover */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-blue-950/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   </div>
                 </div>
                 
@@ -117,9 +78,9 @@ const Products = () => {
                     <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
                     Category 0{index + 1}
                   </div>
-                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-blue-900 mb-5 tracking-tight">{category.title}</h2>
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-blue-900 mb-5 tracking-tight">{category.name}</h2>
                   <p className="text-base lg:text-lg text-slate-600 leading-relaxed mb-6">
-                    {category.description}
+                    {category.fullDescription || category.description}
                   </p>
 
                   {/* Specs */}
@@ -132,13 +93,23 @@ const Products = () => {
                     ))}
                   </div>
 
-                  <Link
-                    to="/contact"
-                    className="group inline-flex items-center gap-2 text-green-700 font-bold hover:text-green-600 transition-colors w-max pb-1 border-b-2 border-green-200 hover:border-green-500"
-                  >
-                    Enquire Complete Specifications
-                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                  </Link>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Link
+                      to={`/product/${category.id}`}
+                      className="group inline-flex items-center gap-2 px-6 py-3 bg-blue-900 text-white font-bold rounded-xl hover:bg-blue-800 transition-all duration-300 shadow-lg shadow-blue-900/20 hover:shadow-xl hover:-translate-y-0.5 w-max"
+                    >
+                      <Eye size={16} />
+                      View Full Details
+                      <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                    <Link
+                      to="/contact"
+                      className="group inline-flex items-center gap-2 text-green-700 font-bold hover:text-green-600 transition-colors w-max pb-1 border-b-2 border-green-200 hover:border-green-500 self-center"
+                    >
+                      Enquire Specifications
+                      <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </div>
                 </div>
               </motion.div>
             ))}

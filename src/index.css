@@ -25,6 +25,7 @@
   --color-amber-400: #fbbf24;
 }
 
+/* ========== BASE STYLES ========== */
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -41,6 +42,10 @@
     outline-offset: 2px;
     border-radius: 4px;
   }
+  /* Smooth transitions for color scheme */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
 }
 
 ::selection {
@@ -48,7 +53,7 @@
   color: white;
 }
 
-/* Smooth scrollbar for webkit browsers */
+/* ========== CUSTOM SCROLLBAR ========== */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -63,7 +68,7 @@
   background: var(--color-blue-700);
 }
 
-/* Image loading skeleton animation */
+/* ========== SKELETON & SHIMMER ========== */
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
@@ -72,4 +77,175 @@
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
+}
+
+/* ========== CAROUSEL STYLES ========== */
+.carousel-skeleton {
+  background: linear-gradient(90deg, #e2e8f0 25%, #cbd5e1 50%, #e2e8f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+.carousel-nav-btn {
+  opacity: 0.7;
+  transition: opacity 0.3s, background-color 0.3s, transform 0.2s;
+}
+.carousel-root:hover .carousel-nav-btn {
+  opacity: 1;
+}
+.carousel-nav-btn:active {
+  transform: translateY(-50%) scale(0.92);
+}
+.carousel-thumbs {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-blue-800) transparent;
+}
+.carousel-thumbs::-webkit-scrollbar {
+  height: 4px;
+}
+.carousel-thumbs::-webkit-scrollbar-track {
+  background: transparent;
+}
+.carousel-thumbs::-webkit-scrollbar-thumb {
+  background: var(--color-blue-800);
+  border-radius: 2px;
+}
+.carousel-root img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* ========== GLASSMORPHISM ========== */
+.glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px) saturate(1.5);
+  -webkit-backdrop-filter: blur(16px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.glass-light {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+.glass-dark {
+  background: rgba(7, 26, 48, 0.85);
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ========== ANIMATED GRADIENT BORDER ========== */
+@keyframes gradient-border {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animated-gradient-bar {
+  background: linear-gradient(
+    90deg,
+    var(--color-green-600),
+    var(--color-green-400),
+    var(--color-blue-600),
+    var(--color-green-500),
+    var(--color-green-600)
+  );
+  background-size: 300% 100%;
+  animation: gradient-border 4s ease infinite;
+}
+
+/* ========== MICRO ANIMATIONS ========== */
+
+/* Subtle float for decorative elements */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+.animate-float-slow {
+  animation: float 7s ease-in-out infinite;
+}
+.animate-float-fast {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Pulse glow for CTAs */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(58, 130, 86, 0.4); }
+  50% { box-shadow: 0 0 20px 4px rgba(58, 130, 86, 0.15); }
+}
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* Animated counter number flip */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-count-up {
+  animation: count-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Parallax background shift */
+.parallax-bg {
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+/* Gradient text utility */
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-green-300), var(--color-green-500));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Scroll reveal - used with intersection observer */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animated underline on hover */
+.hover-underline {
+  position: relative;
+}
+.hover-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-green-500);
+  transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  border-radius: 1px;
+}
+.hover-underline:hover::after {
+  width: 100%;
+}
+
+/* Testimonial card shadow */
+.testimonial-card {
+  box-shadow: 0 4px 24px -4px rgba(7, 26, 48, 0.08);
+  transition: box-shadow 0.5s, transform 0.5s;
+}
+.testimonial-card:hover {
+  box-shadow: 0 12px 40px -8px rgba(7, 26, 48, 0.15);
+  transform: translateY(-4px);
+}
+
+/* Back to top button */
+.back-to-top {
+  transition: opacity 0.3s, transform 0.3s;
+}
+.back-to-top:hover {
+  transform: translateY(-3px);
 }

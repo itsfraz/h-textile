@@ -43,10 +43,12 @@ const Navbar = () => {
       id="main-nav"
       className={`fixed w-full z-50 transition-all duration-500 ${
         isScrolled
-          ? 'bg-white/95 backdrop-blur-lg shadow-lg shadow-black/5 py-3'
-          : 'bg-white/80 backdrop-blur-sm py-4 lg:py-5'
+          ? 'glass-light shadow-lg shadow-black/5 py-3'
+          : 'bg-transparent py-4 lg:py-5'
       }`}
     >
+      {/* Animated bottom border when scrolled */}
+      {isScrolled && <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-green-500/30 to-transparent"></div>}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           {/* Logo */}
