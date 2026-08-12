@@ -80,12 +80,11 @@ const products = [
   {
     id: 'cotton-synthetic-filters',
     name: 'Cotton & Synthetic Filter Cloth',
-    image:
-      'https://images.unsplash.com/photo-1586495985-929b1528096c?auto=format&fit=crop&w=800&q=80',
+    image: '/filter_cloth.png',
     images: [
       {
-        src: 'https://images.unsplash.com/photo-1586495985-929b1528096c?auto=format&fit=crop&w=1200&q=80',
-        alt: 'Close-up of finely woven cotton filter cloth fabric texture',
+        src: '/filter_cloth.png',
+        alt: 'Close up of high quality Cotton and Synthetic industrial Filter Cloth',
       },
       {
         src: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?auto=format&fit=crop&w=1200&q=80',
